@@ -8,8 +8,57 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
+
+</head>
+<script>
+    newbook()
+    function newbook(){
+        $.ajax({
+            type:"GET",
+            url:"http://localhost:8080/books/top4book",
+            success:function (books){
+                let content='<h2 class="title">New Book</h2>\n' +
+                    '        <div class="row">\n'
+                for (let i = 0; i < books.length; i++) {
+                    content+=getnewbook(books[i])
+                }
+                content+='</div>';
+                document.getElementById('newbook').innerHTML=content;
+            }
+        })
+    }
+    function getnewbook(book){
+
+        return '<div class="col-4">\n' +
+            `                <a href="bookDetail.html"><img src="../CaseStudy4_WS/image/${book.image}"></a>\n` +
+            '                <a href="bookDeatail.html"><h4 style="text-align: center">'+book.name+'</h4></a>\n' +
+            '            </div>'
+    }
+    bestBook();
+    function bestBook(){
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/books/bestBook",
+            success:function (book){
+                let content=`<div class="small-container">
+            <div class="row">
+                <div class="col-2"><img src="../CaseStudy4_WS/image/${book.image}" class="offer-img"> </div>
+                <div class="col-2">
+                    <h1>Most Favorite Book </h1>
+                    <small>
+                        `+book.description+`</small>
+                        <br>
+                    <a href="" class="btn">Xem Thêm &#8594;</a>
+                </div>
+            </div>
+        </div>`
+                document.getElementById('bestBook').innerHTML=content
+            }
+        })
+    }
+</script>
 <body>
 <div class="navbar">
     <div class="logo">
@@ -34,10 +83,8 @@
             <div class="row">
                 <div class="col-2">
                     <h1>Give Your Workout<br> A New Style!</h1>
-                    <p>Success ins't always about greatness. It's about
-                        consistency. Consistent <br>hard work gains success. Greatness
-                        will come. </p>
-                    <a href="" class="btn">Explore Now &#8594;</a>
+                    <p>The more that you read, the more things you will know. The more that you learn, the more places you’ll go.. </p>
+<!--                    <a href="" class="btn">Explore Now &#8594;</a>-->
                 </div>
 <!--                <div class="col-2">-->
 <!--                    <img src="images/image1.png">-->
@@ -51,190 +98,25 @@
         <div class="small-container">
             <div class="row">
                 <div class="col-3">
-                    <img src="images/category-1.jpg">
+                    <img src="image/im4.jpg" height="400" width="400"/>
                 </div>
                 <div class="col-3">
-                    <img src="images/category-2.jpg">
-                </div>
+
+                    <img src="image/im2.jpg" height="400" width="400"/></div>
                 <div class="col-3">
-                    <img src="images/category-3.jpg">
-                </div>
+                    <img src="image/im3.png" height="400" width="400 "/></div>
 
             </div>
         </div>
 
     </div>
     <!-- ------------- featured products ---------------- -->
-    <div class="small-container">
-        <h2 class="title">Featured Products</h2>
-        <div class="row">
-            <div class="col-4">
-                <a href="products_detal.html"><img src="images/product-1.jpg"></a>
-                <a href="products_detal.html"><h4>Red Printed T-Shirt</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-            <div class="col-4">
-                <img src="images/product-2.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-            <div class="col-4">
-                <img src="images/product-3.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-            <div class="col-4">
-                <img src="images/product-4.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-        </div>
-        <h2 class="title">Latest Products</h2>
-        <div class="row">
-            <div class="col-4">
-                <img src="images/product-5.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-            <div class="col-4">
-                <img src="images/product-6.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-            <div class="col-4">
-                <img src="images/product-7.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-            <div class="col-4">
-                <img src="images/product-8.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-4">
-                <img src="images/product-9.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-            <div class="col-4">
-                <img src="images/product-10.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-            <div class="col-4">
-                <img src="images/product-11.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-            <div class="col-4">
-                <img src="images/product-12.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-        </div>
+    <div class="small-container" id="newbook">
+
     </div>
+
     <!-- ------------ offer -------------- -->
-    <div class="offer">
-        <div class="small-container">
-            <div class="row">
-                <div class="col-2"><img src="book/co_tich/img1.jpg" class="offer-img"> </div>
-                <div class="col-2">
-                    <p>Exclusive Availabble on RedStore</p>
-                    <h1>Smart Band 4</h1>
-                    <small>
-                        The Mi Smart Band 4 features a 39.9% larger (than Mi Band 4) AMOLED color full-touch display
-                        with
-                        adjustable brightness, so everything is clear as can be</small>
-                    <a href="" class="btn">Buy Now &#8594;</a>
-                </div>
-            </div>
-        </div>
+    <div class="offer" id="bestBook">
     </div>
     <!-- ------------ testimonial -------------- -->
     <div class="testimonial">
@@ -354,7 +236,7 @@
     <!-- ------------------- js for toggle menu-------------- -->
     <script>
         var MenuItems = document.getElementById("MenuItems");
-        
+
         MenuItems.style.maxHeight = "0px";
 
         function menutoggle(){
