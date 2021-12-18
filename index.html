@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><head><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RedStore | Ecommerce Website Design</title>
@@ -13,6 +13,9 @@
 
 </head>
 <script>
+    let customer=localStorage.getItem("customer")
+    document.getElementById("username").innerText=customer.username
+
     newbook()
     function newbook(){
         $.ajax({
@@ -59,6 +62,7 @@
         })
     }
 </script>
+    <script src="login.js"></script>
 <body>
 <div class="navbar">
     <div class="logo">
@@ -68,9 +72,13 @@
         <ul id="MenuItems">
             <li><a href="index.html">Home</a></li>
             <li><a href="products.html">Products</a></li>
-            <li><a href="">About</a></li>
-            <li><a href="">Contact</a></li>
-            <li><a href="account.html">Account</a></li>
+            <li>
+                <span id="username"></span>
+                <button type="submit" onclick="logout()" >logout</button>
+        </li>
+            <li><div sec:authorize="!isAuthenticated()">
+              <a href="/login" style="text-decoration: none">Login</a>
+            </div></li>
         </ul>
     </nav>
     <a href="cart.html"><img src="images/cart.png" width="30px" height="30px"></a>
