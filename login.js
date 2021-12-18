@@ -66,3 +66,6 @@ function register(){
     })
     event.defaultPrevented
 }
+function logout(){
+    localStorage.removeItem("customer")
+}
