@@ -1,18 +1,20 @@
 getBookForFun()
 getAuthor("author")
 getStatus("status")
-getCategory("category")
+getCategoryAdd()
 
 function getBookForFun() {
     $.ajax({
-        url: "http://localhost:8080/books/list",
+        url: "http://localhost:8080/books",
         type: "GET",
         success: function (data) {
             let content = ``
-            for (let i = 0; i < data.length; i++) {
-                content += getBook(data[i]);
+            for (let i = 0; i < data.content.length; i++) {
+                content += getBook(data.content[i]);
             }
             document.getElementById("tbodyId").innerHTML = content;
+            document.getElementById("page").innerHTML = getPage(data);
+            document.getElementById("item").innerText = data.totalElements + ' item';
         }
     })
 }
@@ -29,15 +31,15 @@ function getBook(book) {
         `<label htmlFor="checkbox1"></label>` +
         `</span>` +
         `</td>` +
-        ` <td>${book.name}</td>` +
-        ` <td>${book.author.authorName}</td>` +
+        `<td>${book.name}</td>` +
+        `<td>${book.author.authorName}</td>` +
         `<td>${book.quantity}</td>` +
         `<td>${book.bookStatus.status}</td>` +
         `<td><img src="./image/${book.image}" height="100px" width="80px"></td>` +
         `<td>${book.description}</td>` +
         category +
         `<td>` +
-        `<a href="#editBookModal" class="edit" data-toggle="modal"><i class="material-icons"` +
+        `<a href="#editBookModal" onclick="editForm(this)" id="${book.id}" class="edit" data-toggle="modal"><i class="material-icons"` +
         `data-toggle="tooltip"` +
         `title="Edit">&#xE254;</i></a>` +
         `<a href="#deleteBookModal" onclick="getFormDelete(this)" id="${book.id}" class="delete" data-toggle="modal"><i class="material-icons"` +
@@ -72,7 +74,7 @@ function getStatus(id,statusId) {
             let content = "";
             for (let i = 0; i < data.length; i++) {
                 if(data[i].id===statusId){
-                    content += `<option value="${data[i].id}">${data[i].status}</option>`
+                    content += `<option selected value="${data[i].id}">${data[i].status}</option>`
                 }else{
                     content += `<option value="${data[i].id}">${data[i].status}</option>`
                 }
@@ -83,21 +85,40 @@ function getStatus(id,statusId) {
     })
 }
 
-function getCategory(id,categoryId) {
+function getCategoryEdit(categoryList) {
     $.ajax({
         url: "http://localhost:8080/categories/showAll",
         type: "GET",
         success: function (data) {
             let content = "";
             for (let i = 0; i < data.length; i++) {
-               if(data[i].id===categoryId){
-                   content += `<option id="category" value="${data[i].id}">${data[i].category}</option>`
-               }else{
-                   content += `<option id="category" value="${data[i].id}">${data[i].category}</option>`
-               }
-
+                let check = false;
+                for (let j = 0; j < categoryList.length; j++) {
+                    if (data[i].id == categoryList[j].id ){
+                       check = true;
+                    }
+                }
+                if (check){
+                    content += `<option selected id="category" value="${data[i].id}">${data[i].category}</option>`
+                }
+                else {
+                    content += `<option id="category" value="${data[i].id}">${data[i].category}</option>`
+                }
             }
-            document.getElementById(id).innerHTML = content;
+            document.getElementById('editcategory').innerHTML = content;
+        }
+    })
+}
+function getCategoryAdd() {
+    $.ajax({
+        url: "http://localhost:8080/categories/showAll",
+        type: "GET",
+        success: function (data) {
+            let content = "";
+            for (let i = 0; i < data.length; i++) {
+                content += `<option id="category" value="${data[i].id}">${data[i].category}</option>`
+            }
+            document.getElementById('category').innerHTML = content;
         }
     })
 }
@@ -136,24 +157,27 @@ function createBook() {
         headers:{'Content-Type':undefined},
         contentType: false,
         processData: false,
-        success:getBookForFun()
+        success:getBookForFun
     });
+    $('#addBookModal').modal('hide');
+    event.defaultPrevented
 }
 function editBook(){
-    let name=$("#editName").val();
-    let author=$("#editAuthor").val();
-    let quantity=$("#editQuantity").val();
-    let status=$("#editStatus").val();
-    let image=$("#editImage")[0].files[0];
+
+    let id = $('#id').val();
+    let name=$("#name2").val();
+    let author=$("#editauthor").val();
+    let quantity=$("#quantity2").val();
+    let status=$("#editstatus").val();
+    let img = $('#image2').val();
     let description=$("#editDescription").val();
-    let categoryID=$("#editCategory").val();
+    let categoryID=$("#editcategory").val();
     let category=[];
     for (let i = 0; i < categoryID.length; i++) {
         category[i] = {id: categoryID[i]}
     }
-    let formData = new FormData;
-    formData.append("file", image);
     let book = {
+        id: id,
         name: name,
         quantity: quantity,
         author: {
@@ -162,16 +186,41 @@ function editBook(){
         bookStatus: {
             id: status
         },
+        image: img,
         description: description,
         categoryList: category
     }
-    formData.append("book",JSON.stringify(book))
-    $.ajax({
-        type:"PUT",
-        data: formData,
-        url: "http://localhost:8080/books/update",
-        success:getBookForFun()
-    })
+    if ($("#file2").val() != ''){
+        let image=$("#file2")[0].files[0];
+        let formData = new FormData;
+        formData.append("file", image);
+        formData.append("book",JSON.stringify(book))
+        $.ajax({
+            type:"POST",
+            url: "http://localhost:8080/books/create",
+            data: formData,
+            headers:{'Content-Type':undefined},
+            contentType: false,
+            processData: false,
+            success:getBookForFun
+        });
+
+    }
+    else {
+        $.ajax({
+            type:"PUT",
+            url: "http://localhost:8080/books/update",
+            data:JSON.stringify(book),
+            headers:{
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            success:getBookForFun
+        })
+    }
+    $('#editBookModal').modal('hide');
+    event.defaultPrevented
+
 }
 function editForm(a){
     let id=a.getAttribute("id");
@@ -179,64 +228,28 @@ function editForm(a){
         type:"GET",
         url:"http://localhost:8080/books/find/"+ id,
         headers: {
-            "Accept":"application/json",
-            "Content-type":"application/json"
+
         },
         success: function (data){
+            let img = '/image/' + data.image;
+            alert(data.categoryList.length);
+            getAuthor('editauthor',data.author.id);
+            getStatus('editstatus',data.bookStatus.id);
+            getCategoryEdit(data.categoryList);
+            document.getElementById('editID').innerHTML = `<input id="id" value="${data.id}" type="text" class="form-control" hidden>`;
+            document.getElementById('editname').innerHTML = `<label>Name</label><input id="name2" value="${data.name}" type="text" class="form-control" required>`
+            document.getElementById('editquantity').innerHTML = `<label>Quantity</label>
+            <input id="quantity2" value="${data.quantity}" type="number" class="form-control" required>`
+            document.getElementById('editimg').innerHTML = `<label>Image</label>` +
+                `<img width="100" height="100" src="${img}" alt="Chưa có ảnh">`+
+                `<input type="text"  value="${data.image}" hidden id="image2">`+
+            `<input id="file2"  type="file" class="form-control" required>`
+            document.getElementById('editDescription').defaultValue = data.description;
 
         }
     })
 }
-function form(data){
-    let content=`<div class="modal-content">
-            <form>
-                <div class="modal-header">
-                <h4 class="modal-title">Edit Book</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input id="editName" type="text" class="form-control" value="${data.name}" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Author</label>
-                        <select id="editAuthor" >
 
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Quantity</label>
-                        <input id="editQuantity" type="number" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select id="editStatus">
-
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Image</label>
-                        <input id="editImage" type="file" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <input id="editDescription" type="text" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Category</label>
-                        <select id="editCategory" multiple >
-
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    <input type="submit" class="btn btn-success" value="Add" onclick="createBook()">
-                </div>
-            </form>
-        </div>`
-}
 function getFormDelete(a){
     let id = a.getAttribute("id");
     let content = `<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">`+
@@ -252,4 +265,43 @@ function deleteCustomer(a){
     })
     $('#deleteBookModal').modal('hide');
     event.preventDefault();
+}
+function getPage(page){
+    let content = "";
+    let count = 0;
+    count = parseInt((page.number + 1)/5) * 5;
+    if (page.number > 0){
+        content+= `<li class="page-item "><a class="page-link" onclick="page(this)" id="${page.number -1}">Previous</a></li>`
+    }
+    for (let i = 1; i < 6; i++) {
+        if (count + i <= page.totalPages){
+            if (page.number == count + i -1){
+                content += `<li class="page-item active"><a class="page-link">${count + i}</a></li>`
+            }
+            else {
+                content += `<li class="page-item"><a onclick="page(this)" id="${count + i - 1}" class="page-link">${count + i}</a></li>`
+            }
+        }
+    }
+    if (page.number +1 < page.totalPages){
+        content += `<li class="page-item"><a onclick="page(this)" id="${page.number + 1}" class="page-link">Next</a></li>`
+    }
+    return content;
+
+
+}
+function page(a){
+    let page = a.getAttribute("id");
+    $.ajax({
+        url: "http://localhost:8080/books?page=" + page,
+        type: "GET",
+        success: function (data) {
+            let content = ``
+            for (let i = 0; i < data.content.length; i++) {
+                content += getBook(data.content[i]);
+            }
+            document.getElementById("tbodyId").innerHTML = content;
+            document.getElementById("page").innerHTML = getPage(data);
+        }
+    })
 }
