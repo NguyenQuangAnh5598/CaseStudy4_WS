@@ -1,3 +1,6 @@
+let bookID = localStorage.getItem("bookID");
+let userID = JSON.parse(localStorage.getItem("customer")).id;
+
 successHandlerBookDetail()
 
 
@@ -6,7 +9,7 @@ successHandlerBookDetail()
 function successHandlerBookDetail() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/books/find/1",
+        url: "http://localhost:8080/books/find/" + bookID,
         success: function (data) {
             let img = "/image/" + data.image;
             let content = `<div class="col-2">` +
@@ -66,8 +69,8 @@ function createNewComment() {
     let comment = $('#newcomment').val();
     let newComment = {
         comment: comment,
-        book: {id: 1},
-        user: {id: 4}
+        book: {id: bookID},
+        user: {id: userID}
     }
 
     $.ajax({
@@ -87,7 +90,7 @@ function successHandler() {
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/comments/loadPage/1",
+        url: "http://localhost:8080/comments/loadPage/" + bookID,
 
         success: function (data) {
             document.getElementById('comment').innerText = "Comment(" + data.totalElements + ")"
