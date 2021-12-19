@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Printd T-Shirt - RedStore</title>
+    <title>All Products - RedStore</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="library.js"></script>
 </head>
 
 <body>
@@ -23,91 +25,47 @@
                     <li><a href="library.html">Products</a></li>
                     <li><a href="">About</a></li>
                     <li><a href="">Contact</a></li>
-                    <li><a href="account.html">Account</a></li>
+                    <li><a href="Login.html">Account</a></li>
                 </ul>
             </nav>
             <a href="cart.html"><img src="images/cart.png" width="30px" height="30px"></a>
             <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
         </div>
     </div>
-
-    <!-- -----------------cart item details------------------- -->
-    <div class="small-container cart-page">
-        <table>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Subtotal</th>
-            </tr>
-            <tr>
-                <td>
-                    <div class="cart-info">
-                        <img src="images/buy-1.jpg">
-                        <div>
-                            <p>Red Printed Tshirt</p>
-                            <small>Price: $50.00</small>
-                            <br>
-                            <a href="">Remove</a>
-                        </div>
-                    </div>
-                </td>
-                <td><input type="number" value="1"></td>
-                <td>$50.00</td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="cart-info">
-                        <img src="images/buy-2.jpg">
-                        <div>
-                            <p>Red Printed Tshirt</p>
-                            <small>Price: $75.00</small>
-                            <br>
-                            <a href="">Remove</a>
-                        </div>
-                    </div>
-                </td>
-                <td><input type="number" value="1"></td>
-                <td>$75.00</td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="cart-info">
-                        <img src="images/buy-3.jpg">
-                        <div>
-                            <p>Red Printed Tshirt</p>
-                            <small>Price: $50.00</small>
-                            <br>
-                            <a href="">Remove</a>
-                        </div>
-                    </div>
-                </td>
-                <td><input type="number" value="1"></td>
-                <td>$50.00</td>
-            </tr>
-        </table>
-
-        <div class="total-price">
-            <table>
-                <tr>
-                    <td>Subtotal</td>
-                    <td>175.000$</td>
-                </tr>
-                <tr>
-                    <td>Tax</td>
-                    <td>25.00$</td>
-                </tr>
-                <tr>
-                    <td>Total</td>
-                    <td>200.000$</td>
-                </tr>
-            </table>
-
-        </div>
-
-
     </div>
 
 
+
+    <div class="small-container">
+        <div>
+            <label for="author">Author</label>
+            <select onchange="findByAuthor()" id="author">
+
+            </select>
+        </div>
+        <div>
+            <label for="category">Category</label>
+            <select onchange="findByCategory()" id="category">
+
+            </select>
+        </div>
+        <div class="row row-2">
+            <h2>All Products</h2>
+                <option>Default Shop</option>
+                <option>Short by price</option>
+                <option>Short by popularity</option>
+                <option>Short by Rating</option>
+                <option>Short by Sale</option>
+            </select>
+        </div>
+
+        <div class="row" id="listBook">
+
+        </div>
+        <div class="page-btn" id="page">
+
+        </div>
+    </div>
     <!-- ------------footer----------- -->
 
     <div class="footer">
@@ -164,7 +122,7 @@
             }
 
         </script>
-
+    </div>
 </body>
 
 </html>
