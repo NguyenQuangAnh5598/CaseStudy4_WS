@@ -20,7 +20,7 @@ function getAllBook(){
 function getBook(book){
     let img = "/image/" + book.image;
     let content = `<div class="col-4">`+
-        `<a href="products_detal.html"><img src="${img}"></a>`+
+        `<p onclick="getDetail(this)" id="${book.id}"><img src="${img}"></p>`+
         `<h4>${book.name}</h4>`+
     `</div>`
     return content;
@@ -144,4 +144,10 @@ function findByAuthor(){
             $(window).scrollTop(0);
         }
     })
+}
+function getDetail(a) {
+    let id  = a.getAttribute("id");
+    localStorage.setItem("bookID", id);
+    window.location.href ="/CaseStudy4_WS/products_detal.html"
+    event.defaultPrevented
 }
