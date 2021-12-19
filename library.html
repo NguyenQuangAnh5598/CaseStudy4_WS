@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Printd T-Shirt - RedStore</title>
+    <title>All Products - RedStore</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="library.js"></script>
 </head>
 
 <body>
@@ -23,46 +25,45 @@
                     <li><a href="library.html">Products</a></li>
                     <li><a href="">About</a></li>
                     <li><a href="">Contact</a></li>
-                    <li><a href="account.html">Account</a></li>
+                    <li><a href="Login.html">Account</a></li>
                 </ul>
             </nav>
             <a href="cart.html"><img src="images/cart.png" width="30px" height="30px"></a>
             <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
         </div>
     </div>
-    <!-- ------------Account-page------------------- -->
-    <div class="account-page">
-        <div class="container">
-            <div class="row">
-<!--                <div class="col-2">-->
-<!--                    <img src="images/image1.png" width="100%">-->
-<!--                </div>-->
+    </div>
 
-                <div class="col-2">
-                    <div class="form-container">
-                        <div class="form-btn">
-                            <span onclick="login()">Login</span>
-                            <span onclick="register()">Register</span>
-                            <hr id="Indicator">
-                        </div>
 
-                        <form id="LoginForm">
-                            <input type="text" placeholder="Username">
-                            <input type="password" placeholder="Password">
-                            <button type="submit" class="btn">Login</button>
-                            <a href="">Forgot password</a>
-                        </form>
 
-                        <form id="RegForm">
-                            <input type="text" placeholder="Username">
-                            <input type="email" placeholder="Email">
-                            <input type="password" placeholder="Password">
-                            <button type="submit" class="btn">Register</button>
-                        </form>
+    <div class="small-container">
+        <div>
+            <label for="author">Author</label>
+            <select onchange="findByAuthor()" id="author">
 
-                    </div>
-                </div>
-            </div>
+            </select>
+        </div>
+        <div>
+            <label for="category">Category</label>
+            <select onchange="findByCategory()" id="category">
+
+            </select>
+        </div>
+        <div class="row row-2">
+            <h2>All Products</h2>
+                <option>Default Shop</option>
+                <option>Short by price</option>
+                <option>Short by popularity</option>
+                <option>Short by Rating</option>
+                <option>Short by Sale</option>
+            </select>
+        </div>
+
+        <div class="row" id="listBook">
+
+        </div>
+        <div class="page-btn" id="page">
+
         </div>
     </div>
     <!-- ------------footer----------- -->
@@ -119,27 +120,6 @@
                     MenuItems.style.maxHeight = "0px";
                 }
             }
-
-        </script>
-        <!-- ------------------- js for Account form-------------- -->
-
-        <script>
-            var LoginForm = document.getElementById("LoginForm");
-            var RegForm = document.getElementById("RegForm");
-            var Indicator = document.getElementById("Indicator");
-
-            function register() {
-                RegForm.style.transform = "translateX(0px)";
-                LoginForm.style.transform = "translateX(0px)";
-                Indicator.style.transform = "translateX(100px)";
-
-            }
-            function login() {
-                RegForm.style.transform = "translateX(300px)";
-                LoginForm.style.transform = "translateX(300px)";
-                Indicator.style.transform = "translateX(0px)";
-            }
-
 
         </script>
     </div>

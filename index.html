@@ -1,64 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RedStore | Ecommerce Website Design</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RedStore | Ecommerce Website Design</title>
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+              rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    </head>
+    <script>
 
+        newbook()
 
-</head>
-<script>
-    newbook()
-    function newbook(){
-        $.ajax({
-            type:"GET",
-            url:"http://localhost:8080/books/top4book",
-            success:function (books){
-                let content='<h2 class="title">New Book</h2>\n' +
-                    '        <div class="row">\n'
-                for (let i = 0; i < books.length; i++) {
-                    content+=getnewbook(books[i])
+        function newbook() {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/books/top4book",
+                success: function (books) {
+                    let content = '<h2 class="title">New Book</h2>\n' +
+                        '        <div class="row">\n'
+                    for (let i = 0; i < books.length; i++) {
+                        content += getnewbook(books[i])
+                    }
+                    content += '</div>';
+                    document.getElementById('newbook').innerHTML = content;
                 }
-                content+='</div>';
-                document.getElementById('newbook').innerHTML=content;
-            }
-        })
-    }
-    function getnewbook(book){
+            })
+        }
 
-        return '<div class="col-4">\n' +
-            `                <a href="bookDetail.html"><img src="../CaseStudy4_WS/image/${book.image}"></a>\n` +
-            '                <a href="bookDeatail.html"><h4 style="text-align: center">'+book.name+'</h4></a>\n' +
-            '            </div>'
-    }
-    bestBook();
-    function bestBook(){
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/books/bestBook",
-            success:function (book){
-                let content=`<div class="small-container">
+        function getnewbook(book) {
+
+            return '<div class="col-4">\n' +
+                `                <a href="bookDetail.html"><img src="../CaseStudy4_WS/image/${book.image}"></a>\n` +
+                '                <a href="bookDeatail.html"><h4 style="text-align: center">' + book.name + '</h4></a>\n' +
+                '            </div>'
+        }
+
+        bestBook();
+
+        function bestBook() {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/books/bestBook",
+                success: function (book) {
+                    let content = `<div class="small-container">
             <div class="row">
                 <div class="col-2"><img src="../CaseStudy4_WS/image/${book.image}" class="offer-img"> </div>
                 <div class="col-2">
                     <h1>Most Favorite Book </h1>
                     <small>
-                        `+book.description+`</small>
+                        ` + book.description + `</small>
                         <br>
                     <a href="" class="btn">Xem Thêm &#8594;</a>
                 </div>
             </div>
         </div>`
-                document.getElementById('bestBook').innerHTML=content
-            }
-        })
-    }
-</script>
+                    document.getElementById('bestBook').innerHTML = content
+                }
+            })
+        }
+    </script>
+    <script src="login.js"></script>
 <body>
 <div class="navbar">
     <div class="logo">
@@ -67,189 +73,211 @@
     <nav>
         <ul id="MenuItems">
             <li><a href="index.html">Home</a></li>
-            <li><a href="products.html">Products</a></li>
-            <li><a href="">About</a></li>
-            <li><a href="">Contact</a></li>
-            <li><a href="account.html">Account</a></li>
+            <li><a href="library.html">Products</a></li>
+            <li>
+                <span id="username"></span>
+                <script>
+                    let customer = JSON.parse(localStorage.getItem("customer"))
+                    if (customer != null) {
+                        let name = customer.username
+                        let content = `<h2>Hello ${name}</h2> `
+                        document.getElementById("username").innerHTML = content
+                    }
+                </script>
+            </li>
+            <li id="logout">
+                <script>
+                    if(customer!=null){
+                        let logout=`<a onclick="logout()" style="text-decoration: none">logout</a>`
+                        document.getElementById("logout").innerHTML=logout
+                    }
+                </script>
+            </li>
+            <li id="login">
+                <script>
+                    if(customer==null){
+                        let login=`<a href="Login.html" style="text-decoration: none">Login</a>`
+                        document.getElementById("login").innerHTML=login
+                    }
+                </script>
+            </li>
         </ul>
     </nav>
     <a href="cart.html"><img src="images/cart.png" width="30px" height="30px"></a>
     <img src="images/menu.png" class="menu-icon"
          onclick="menutoggle()">
 </div>
-    <div class="header">
-        <div class="container">
+<div class="header">
+    <div class="container">
 
-            <div class="row">
-                <div class="col-2">
-                    <h1>Give Your Workout<br> A New Style!</h1>
-                    <p>The more that you read, the more things you will know. The more that you learn, the more places you’ll go.. </p>
-<!--                    <a href="" class="btn">Explore Now &#8594;</a>-->
-                </div>
-<!--                <div class="col-2">-->
-<!--                    <img src="images/image1.png">-->
-<!--                </div>-->
+        <div class="row">
+            <div class="col-2">
+                <h1>Give Your Workout<br> A New Style!</h1>
+                <p style="color: #f5f4ec">The more that you read, the more things you will know. The more that you learn, the more places
+                    you’ll go.. </p>
+                <!--                    <a href="" class="btn">Explore Now &#8594;</a>-->
             </div>
+            <!--                <div class="col-2">-->
+            <!--                    <img src="images/image1.png">-->
+            <!--                </div>-->
+        </div>
+    </div>
+</div>
+
+<!-- ------------- featured categorries ---------------- -->
+<div class="categories">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-3">
+                <img src="image/im4.jpg" height="400" width="400"/>
+            </div>
+            <div class="col-3">
+
+                <img src="image/im2.jpg" height="400" width="400"/></div>
+            <div class="col-3">
+                <img src="image/im3.png" height="400" width="400 "/></div>
+
         </div>
     </div>
 
-    <!-- ------------- featured categorries ---------------- -->
-    <div class="categories">
-        <div class="small-container">
-            <div class="row">
-                <div class="col-3">
-                    <img src="image/im4.jpg" height="400" width="400"/>
+</div>
+<!-- ------------- featured products ---------------- -->
+<div class="small-container" id="newbook">
+
+</div>
+
+<!-- ------------ offer -------------- -->
+<div class="offer" id="bestBook">
+</div>
+<!-- ------------ testimonial -------------- -->
+<div class="testimonial">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-3">
+                <i class="fa fa-qoute-lef"></i>
+                <p>Abilities or he perfectly pretended so strangers be exquisite. Oh to another chamber pleased
+                    imagine do in. Went me rank at last loud shot an draw. Excellent so to no sincerity smallness.
+                    Removal request delight if on he we</p>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
                 </div>
-                <div class="col-3">
-
-                    <img src="image/im2.jpg" height="400" width="400"/></div>
-                <div class="col-3">
-                    <img src="image/im3.png" height="400" width="400 "/></div>
-
+                <img src="images/user-1.png">
+                <h3>Đạt 1 Phích</h3>
             </div>
-        </div>
-
-    </div>
-    <!-- ------------- featured products ---------------- -->
-    <div class="small-container" id="newbook">
-
-    </div>
-
-    <!-- ------------ offer -------------- -->
-    <div class="offer" id="bestBook">
-    </div>
-    <!-- ------------ testimonial -------------- -->
-    <div class="testimonial">
-        <div class="small-container">
-            <div class="row">
-                <div class="col-3">
-                    <i class="fa fa-qoute-lef"></i>
-                    <p>Abilities or he perfectly pretended so strangers be exquisite. Oh to another chamber pleased
-                        imagine do in. Went me rank at last loud shot an draw. Excellent so to no sincerity smallness.
-                        Removal request delight if on he we</p>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <img src="images/user-1.png">
-                    <h3>Đạt 1 Phích</h3>
+            <div class="col-3">
+                <i class="fa fa-qoute-lef"></i>
+                <p>Abilities or he perfectly pretended so strangers be exquisite. Oh to another chamber pleased
+                    imagine do in. Went me rank at last loud shot an draw. Excellent so to no sincerity smallness.
+                    Removal request delight if on he we</p>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
                 </div>
-                <div class="col-3">
-                    <i class="fa fa-qoute-lef"></i>
-                    <p>Abilities or he perfectly pretended so strangers be exquisite. Oh to another chamber pleased
-                        imagine do in. Went me rank at last loud shot an draw. Excellent so to no sincerity smallness.
-                        Removal request delight if on he we</p>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <img src="images/user-2.png">
-                    <h3>An Nguyen</h3>
+                <img src="images/user-2.png">
+                <h3>An Nguyen</h3>
+            </div>
+            <div class="col-3">
+                <i class="fa fa-qoute-lef"></i>
+                <p>Abilities or he perfectly pretended so strangers be exquisite. Oh to another chamber pleased
+                    imagine do in. Went me rank at last loud shot an draw. Excellent so to no sincerity smallness.
+                    Removal request delight if on he we</p>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
                 </div>
-                <div class="col-3">
-                    <i class="fa fa-qoute-lef"></i>
-                    <p>Abilities or he perfectly pretended so strangers be exquisite. Oh to another chamber pleased
-                        imagine do in. Went me rank at last loud shot an draw. Excellent so to no sincerity smallness.
-                        Removal request delight if on he we</p>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <img src="images/user-3.png">
-                    <h3>Quang Hoang</h3>
-                </div>
+                <img src="images/user-3.png">
+                <h3>Quang Hoang</h3>
             </div>
         </div>
     </div>
-    <!-- ------------------- brands --------------------- -->
-    <div class="brands">
-        <div class="small-container">
-            <div class="row">
-                <div class="col-5">
-                    <img src="images/logo-godrej.png">
-                </div>
-                <div class="col-5">
-                    <img src="images/logo-oppo.png">
-                </div>
-                <div class="col-5">
-                    <img src="images/logo-coca-cola.png">
-                </div>
-                <div class="col-5">
-                    <img src="images/logo-paypal.png">
-                </div>
-                <div class="col-5">
-                    <img src="images/logo-philips.png">
-                </div>
+</div>
+<!-- ------------------- brands --------------------- -->
+<div class="brands">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-5">
+                <img src="images/logo-godrej.png">
+            </div>
+            <div class="col-5">
+                <img src="images/logo-oppo.png">
+            </div>
+            <div class="col-5">
+                <img src="images/logo-coca-cola.png">
+            </div>
+            <div class="col-5">
+                <img src="images/logo-paypal.png">
+            </div>
+            <div class="col-5">
+                <img src="images/logo-philips.png">
             </div>
         </div>
     </div>
-    <!-- ------------footer----------- -->
+</div>
+<!-- ------------footer----------- -->
 
-    <div class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="footer-col-1">
-                    <h3>Download Our App</h3>
-                    <p>Download App for Android and ios mobile phone</p>
-                    <div class="app-logo">
-                        <img src="images/play-store.png">
-                        <img src="images/app-store.png">
-                    </div>
-                </div>
-                <div class="footer-col-2">
-                    <img src="images/logo-white.png">
-                    <p>Our Purpose Is To Sustainably Make the Pleasure and
-                        Benefits of Sports Accessible to the Many</p>
-                </div>
-                <div class="footer-col-3">
-                    <h3>Useful Links</h3>
-                    <ul>
-                        <li>Coupons</li>
-                        <li>Blog Post</li>
-                        <li>Return Policy</li>
-                        <li>Join Affiliate</li>
-                    </ul>
-                </div>
-                <div class="footer-col-4">
-                    <h3>Follow us</h3>
-                    <ul>
-                        <li>Facebook</li>
-                        <li>Twitter</li>
-                        <li>Instagram</li>
-                        <li>Youtube </li>
-                    </ul>
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col-1">
+                <h3>Download Our App</h3>
+                <p>Download App for Android and ios mobile phone</p>
+                <div class="app-logo">
+                    <img src="images/play-store.png">
+                    <img src="images/app-store.png">
                 </div>
             </div>
-            <hr>
-            <p class="Copyright">Copyright 2020 - By QuocHuy</p>
+            <div class="footer-col-2">
+                <img src="images/logo-white.png">
+                <p>Our Purpose Is To Sustainably Make the Pleasure and
+                    Benefits of Sports Accessible to the Many</p>
+            </div>
+            <div class="footer-col-3">
+                <h3>Useful Links</h3>
+                <ul>
+                    <li>Coupons</li>
+                    <li>Blog Post</li>
+                    <li>Return Policy</li>
+                    <li>Join Affiliate</li>
+                </ul>
+            </div>
+            <div class="footer-col-4">
+                <h3>Follow us</h3>
+                <ul>
+                    <li>Facebook</li>
+                    <li>Twitter</li>
+                    <li>Instagram</li>
+                    <li>Youtube</li>
+                </ul>
+            </div>
         </div>
+        <hr>
+        <p class="Copyright">Copyright 2020 - By QuocHuy</p>
     </div>
-    <!-- ------------------- js for toggle menu-------------- -->
-    <script>
-        var MenuItems = document.getElementById("MenuItems");
+</div>
+<!-- ------------------- js for toggle menu-------------- -->
+<script>
+    var MenuItems = document.getElementById("MenuItems");
 
-        MenuItems.style.maxHeight = "0px";
+    MenuItems.style.maxHeight = "0px";
 
-        function menutoggle(){
-            if(MenuItems.style.maxHeight == "0px")
-            {
-                MenuItems.style.maxHeight = "200px";
-            }
-        else
-            {
-                MenuItems.style.maxHeight = "0px";
-            }
+    function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+            MenuItems.style.maxHeight = "200px";
+        } else {
+            MenuItems.style.maxHeight = "0px";
         }
+    }
 
-    </script>
+</script>
 </body>
 </html>
