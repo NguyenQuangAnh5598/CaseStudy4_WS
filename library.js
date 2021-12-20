@@ -21,6 +21,7 @@ function getBook(book){
     let img = "/image/" + book.image;
     let content = `<div class="col-4">`+
         `<p onclick="getDetail(this)" id="${book.id}"><img src="${img}"></p>`+
+        `<button onclick="borrow(this)" id="${book.id}">muon</button>`+
         `<h4>${book.name}</h4>`+
     `</div>`
     return content;
@@ -149,4 +150,29 @@ function getDetail(a) {
     let  id = a.getAttribute("id");
     localStorage.setItem("bookID", id);
     window.location.href ="/CaseStudy4_WS/products_detal.html"
+}
+function borrow(a){
+    let bookID = a.getAttribute("id");
+    let userID = JSON.parse(localStorage.getItem("customer")).id;
+
+    $.ajax({
+        type:"GET",
+        url:"http://localhost:8080/cart/findCart/" + userID,
+        success:function (data) {
+            let cartID = data.id;
+            let cartDetail = {book:{id:bookID}, cart:{id:cartID}}
+            $.ajax({
+                type:"POST",
+                url:"http://localhost:8080/cartDetail/create",
+                headers:{
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                data:JSON.stringify(cartDetail),
+                success:function () {
+                    getAllBook
+                }
+            })
+        }
+    })
 }
