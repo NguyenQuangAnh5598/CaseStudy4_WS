@@ -33,7 +33,6 @@
                 <li>
                     <span id="username"></span>
                     <script>
-                        let customer = JSON.parse(localStorage.getItem("customer"))
                         if (customer != null) {
                             let name = customer.username
                             let content = `<h2>Hello ${name}</h2> `
@@ -214,25 +213,7 @@
 
     </script>
 
-    <!-- ------------------- JS for  product gallery------------------------         -->
-    <script>
-        var ProductImg = document.getElementById("productImg");
-        var SmallImg = document.getElementsByClassName("small-img");
 
-        SmallImg[0].onclick = function () {
-            ProductImg.src = SmallImg[0].src;
-        }
-        SmallImg[1].onclick = function () {
-            ProductImg.src = SmallImg[1].src;
-        }
-        SmallImg[2].onclick = function () {
-            ProductImg.src = SmallImg[2].src;
-        }
-        SmallImg[3].onclick = function () {
-            ProductImg.src = SmallImg[3].src;
-        }
-
-    </script>
 </div>
 </body>
 
