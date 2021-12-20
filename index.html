@@ -13,6 +13,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     </head>
     <script>
+        let customer = JSON.parse(localStorage.getItem("customer"))
 
         newbook()
 
@@ -45,6 +46,9 @@
         function bestBook() {
             $.ajax({
                 type: "GET",
+                headers: {
+                    'Authorization': 'Bearer '+ customer.accessToken
+                },
                 url: "http://localhost:8080/books/bestBook",
                 success: function (book) {
                     let content = `<div class="small-container">
@@ -84,10 +88,9 @@
             <li>
                 <span id="username"></span>
                 <script>
-                    let customer = JSON.parse(localStorage.getItem("customer"))
                     if (customer != null) {
                         let name = customer.username
-                        let content = `<a href="" style="text-decoration: none"><h4 style="color: #92169f">Hello ${name}</h4></a> `
+                        let content = `<a href="UserInformation.html" style="text-decoration: none"><h4 style="color: #92169f">Hello ${name}</h4></a> `
                         document.getElementById("username").innerHTML = content
                     }
                 </script>
@@ -119,7 +122,7 @@
 
         <div class="row">
             <div class="col-2">
-                <h1>Give Your Workout<br> A New Style!</h1>
+                <h1 style="color: white">Library of Congress</h1>
                 <p style="color: #f5f4ec">The more that you read, the more things you will know. The more that you
                     learn, the more places
                     you’ll go.. </p>

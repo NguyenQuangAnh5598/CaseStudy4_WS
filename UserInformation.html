@@ -15,7 +15,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
-        // let user = JSON.parse(localStorage.getItem("user"));
+        let customer = JSON.parse(localStorage.getItem("customer"));
 
         function updateImage() {
             let img = $("#file")[0].files[0];
@@ -23,11 +23,14 @@
             let formData = new FormData;
             formData.append("file", img);
             $.ajax({
+                headers:{
+                    'Authorization': 'Bearer '+ customer.accessToken
+                },
                 contentType: false,
                 processData: false,
                 type: "PUT",
                 data: formData,
-                url: "http://localhost:8080/user/editPhoto/4",
+                url: "http://localhost:8080/user/editPhoto/"+customer.id,
                 success: function () {
                    showInformation();
                 }
@@ -45,12 +48,13 @@
             };
             $.ajax({
                 headers: {
+                    'Authorization': 'Bearer '+ customer.accessToken,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 type: "PUT",
                 data: JSON.stringify(newUser),
-                url: "http://localhost:8080/user/edit/4",
+                url: "http://localhost:8080/user/edit/"+customer.id,
                 success: function () {
                     showInformation()
                     document.getElementById('fullname').innerText = fullName;
@@ -61,8 +65,11 @@
         function showInformation() {
             // let id = user.id
             $.ajax({
+                headers:{
+                    'Authorization': 'Bearer '+ customer.accessToken
+                },
                 type: "GET",
-                url: "http://localhost:8080/user/findOne/4",
+                url: "http://localhost:8080/user/findOne/"+ customer.id,
                 success: function (data) {
                     let content = `<div class="row">
                                     <div class="col-md-6">
@@ -179,7 +186,6 @@
                     <h6>
                         Web Developer and Designer
                     </h6>
-                    <p class="proile-rating">RANKINGS : <span>8/10</span></p>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
@@ -203,15 +209,9 @@
             <div class="col-md-4">
                 <div class="profile-work">
                     <p>WORK LINK</p>
-                    <a href="#addEmployeeModal">Home</a><br/>
-                    <a href="products.html">Product</a><br/>
+                    <a href="index.html">Home</a><br/>
+                    <a href="library.html">Product</a><br/>
                     <a href="">Bootply Profile</a>
-                    <p>SKILLS</p>
-                    <a href="">Web Designer</a><br/>
-                    <a href="">Web Developer</a><br/>
-                    <a href="">WordPress</a><br/>
-                    <a href="">WooCommerce</a><br/>
-                    <a href="">PHP, .Net</a><br/>
                 </div>
             </div>
             <div class="col-md-8">
