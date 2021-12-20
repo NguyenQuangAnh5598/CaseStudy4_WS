@@ -66,3 +66,8 @@ function register(){
     })
     event.defaultPrevented
 }
+function logout(){
+    localStorage.removeItem("customer")
+    window.location.href ="/CaseStudy4_WS/index.html"
+    event.defaultPrevented
+}

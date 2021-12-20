@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src="library.js"></script>
+    <script src="login.js"></script>
 </head>
 
 <body>
@@ -23,9 +24,33 @@
                 <ul id="MenuItems">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="library.html">Products</a></li>
-                    <li><a href="">About</a></li>
-                    <li><a href="">Contact</a></li>
-                    <li><a href="Login.html">Account</a></li>
+                    <li>
+                        <span id="username"></span>
+                        <script>
+                            let customer = JSON.parse(localStorage.getItem("customer"))
+                            if (customer != null) {
+                                let name = customer.username
+                                let content = `<h2>Hello ${name}</h2> `
+                                document.getElementById("username").innerHTML = content
+                            }
+                        </script>
+                    </li>
+                    <li id="logout">
+                        <script>
+                            if(customer!=null){
+                                let logout=`<a onclick="logout()" style="text-decoration: none">logout</a>`
+                                document.getElementById("logout").innerHTML=logout
+                            }
+                        </script>
+                    </li>
+                    <li id="login">
+                        <script>
+                            if(customer==null){
+                                let login=`<a href="Login.html" style="text-decoration: none">Login</a>`
+                                document.getElementById("login").innerHTML=login
+                            }
+                        </script>
+                    </li>
                 </ul>
             </nav>
             <a href="cart.html"><img src="images/cart.png" width="30px" height="30px"></a>
@@ -47,15 +72,6 @@
             <label for="category">Category</label>
             <select onchange="findByCategory()" id="category">
 
-            </select>
-        </div>
-        <div class="row row-2">
-            <h2>All Products</h2>
-                <option>Default Shop</option>
-                <option>Short by price</option>
-                <option>Short by popularity</option>
-                <option>Short by Rating</option>
-                <option>Short by Sale</option>
             </select>
         </div>
 
