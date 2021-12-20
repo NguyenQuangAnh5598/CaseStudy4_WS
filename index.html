@@ -35,7 +35,7 @@
         function getnewbook(book) {
 
             return '<div class="col-4">\n' +
-                `                <a href="bookDetail.html"><img src="../CaseStudy4_WS/image/${book.image}"></a>\n` +
+                `                <p onclick="getDetail(this)" id="${book.id}" "><img src="../CaseStudy4_WS/image/${book.image}" width="200px" height="350"></a>\n` +
                 '                <a href="bookDeatail.html"><h4 style="text-align: center">' + book.name + '</h4></a>\n' +
                 '            </div>'
         }
@@ -55,7 +55,7 @@
                     <small>
                         ` + book.description + `</small>
                         <br>
-                    <a href="" class="btn">Xem Thêm &#8594;</a>
+                    <p onclick="getDetail(this)" id="${book.id}" class="btn">Mượn &#8594;</p>
                 </div>
             </div>
         </div>`
@@ -63,6 +63,13 @@
                 }
             })
         }
+
+        function getDetail(a) {
+            let id = a.getAttribute("id");
+            localStorage.setItem("bookID", id);
+            window.location.href = "/CaseStudy4_WS/products_detal.html"
+        }
+
     </script>
     <script src="login.js"></script>
 <body>
@@ -80,24 +87,24 @@
                     let customer = JSON.parse(localStorage.getItem("customer"))
                     if (customer != null) {
                         let name = customer.username
-                        let content = `<h2>Hello ${name}</h2> `
+                        let content = `<a href="" style="text-decoration: none"><h2>Hello ${name}</h2></a> `
                         document.getElementById("username").innerHTML = content
                     }
                 </script>
             </li>
             <li id="logout">
                 <script>
-                    if(customer!=null){
-                        let logout=`<a onclick="logout()" style="text-decoration: none">logout</a>`
-                        document.getElementById("logout").innerHTML=logout
+                    if (customer != null) {
+                        let logout = `<a onclick="logout()" style="text-decoration: none">logout</a>`
+                        document.getElementById("logout").innerHTML = logout
                     }
                 </script>
             </li>
             <li id="login">
                 <script>
-                    if(customer==null){
-                        let login=`<a href="Login.html" style="text-decoration: none">Login</a>`
-                        document.getElementById("login").innerHTML=login
+                    if (customer == null) {
+                        let login = `<a href="Login.html" style="text-decoration: none">Login</a>`
+                        document.getElementById("login").innerHTML = login
                     }
                 </script>
             </li>
@@ -113,13 +120,11 @@
         <div class="row">
             <div class="col-2">
                 <h1>Give Your Workout<br> A New Style!</h1>
-                <p style="color: #f5f4ec">The more that you read, the more things you will know. The more that you learn, the more places
+                <p style="color: #f5f4ec">The more that you read, the more things you will know. The more that you
+                    learn, the more places
                     you’ll go.. </p>
-                <!--                    <a href="" class="btn">Explore Now &#8594;</a>-->
             </div>
-            <!--                <div class="col-2">-->
-            <!--                    <img src="images/image1.png">-->
-            <!--                </div>-->
+
         </div>
     </div>
 </div>
@@ -156,7 +161,9 @@
             <div class="col-3">
                 <i class="fa fa-qoute-lef"></i>
                 <h3>Do what you like and like what you do !</h3>
-                <p>Imagine when you 42 years old, you wake up on bed and start another day with same things to do like everyday. You live like 20 years like that. If you don’t like it, how u still can do? So love what you do , do what you love will save your life a lote</p>
+                <p>Imagine when you 42 years old, you wake up on bed and start another day with same things to do like
+                    everyday. You live like 20 years like that. If you don’t like it, how u still can do? So love what
+                    you do , do what you love will save your life a lote</p>
                 <img src="avatar/beng.jpg" height="100" width="100"/>
                 <h3>Lawer Law <br>(Công Bằng)</h3>
 
@@ -164,30 +171,37 @@
             <div class="col-3">
                 <i class="fa fa-qoute-lef"></i>
                 <h3>Pussy is only thing exist, another thing, have or not doesn’t matter.</h3>
-                <p>ATalking about life, it’s always long story. But in that long story, did u enjoyed every moment? I not enjoyed every moment at all, but some moments I really enjoy. That’s moments are moment with my super cute girls, always make me happy with their pussies… Oh my holy gosh, I love my life !</p>
+                <p>ATalking about life, it’s always long story. But in that long story, did u enjoyed every moment? I
+                    not enjoyed every moment at all, but some moments I really enjoy. That’s moments are moment with my
+                    super cute girls, always make me happy with their pussies… Oh my holy gosh, I love my life !</p>
                 <img src="images/user-3.png">
                 <h3>Lighting Brother<br> (Quang Anh)</h3>
             </div>
             <div class="col-3">
                 <i class="fa fa-qoute-lef"></i>
                 <h3>We meet when flower blow</h3>
-                <p>Why people? Why not another any animals else? Why we got chosen and  chosen by who? I always keep asking my self and I think everything happen for a reason, we just know or not. So I know I’ll meet my half when the flower is blow.</p>
+                <p>Why people? Why not another any animals else? Why we got chosen and chosen by who? I always keep
+                    asking my self and I think everything happen for a reason, we just know or not. So I know I’ll meet
+                    my half when the flower is blow.</p>
 
-              <img src="avatar/dinh.jpg" height="70" width="100"/>
+                <img src="avatar/dinh.jpg" height="70" width="100"/>
                 <h3>Kawa Decided<br> (Định Kawa)</h3>
             </div>
 
             <div class="col-3">
                 <i class="fa fa-qoute-lef"></i>
                 <h3>Peaceful, can be gain without War</h3>
-                <p>History was wroten by winner guys. Many years is evidence of what I’m talking about. Peaceful is reward for victories of battle war’s master. In another life, I conquered many civilization and now I’m reborn. I remember everything. </p>
+                <p>History was wroten by winner guys. Many years is evidence of what I’m talking about. Peaceful is
+                    reward for victories of battle war’s master. In another life, I conquered many civilization and now
+                    I’m reborn. I remember everything. </p>
                 <img src="images/user-3.png">
                 <h3>Forever Peaceful <br>(Thanh Trường)</h3>
             </div>
             <div class="col-3">
                 <i class="fa fa-qoute-lef"></i>
                 <h3>You alive when you alive </h3>
-                <p>You only life once. Dead or alive, just kind of status. Many peoples life but not life. So let’s life how to it worthy.</p>
+                <p>You only life once. Dead or alive, just kind of status. Many peoples life but not life. So let’s life
+                    how to it worthy.</p>
                 <img src="images/user-3.png">
                 <h3>SavageMod Pretty Boy<br> (Bá Tuấn)</h3>
             </div>

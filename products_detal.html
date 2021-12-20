@@ -30,9 +30,33 @@
             <ul id="MenuItems">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="library.html">Library</a></li>
-                <li><a href="">About</a></li>
-                <li><a href="">Contact</a></li>
-                <li><a href="account.html">Account</a></li>
+                <li>
+                    <span id="username"></span>
+                    <script>
+                        let customer = JSON.parse(localStorage.getItem("customer"))
+                        if (customer != null) {
+                            let name = customer.username
+                            let content = `<h2>Hello ${name}</h2> `
+                            document.getElementById("username").innerHTML = content
+                        }
+                    </script>
+                </li>
+                <li id="logout">
+                    <script>
+                        if(customer!=null){
+                            let logout=`<a onclick="logout()" style="text-decoration: none">logout</a>`
+                            document.getElementById("logout").innerHTML=logout
+                        }
+                    </script>
+                </li>
+                <li id="login">
+                    <script>
+                        if(customer==null){
+                            let login=`<a href="Login.html" style="text-decoration: none">Login</a>`
+                            document.getElementById("login").innerHTML=login
+                        }
+                    </script>
+                </li>
             </ul>
         </nav>
         <a href="cart.html"><img src="images/cart.png" width="30px" height="30px"></a>
