@@ -1,5 +1,5 @@
 body{margin-top:20px;
-    background: #fc0000;
+    background: linear-gradient(-135deg, #f5dd6a, #e86464, #ee925d);
 }
 
 .member-entry {
@@ -176,3 +176,4 @@ body{margin-top:20px;
         margin-top: 10px;
     }
 }
+
