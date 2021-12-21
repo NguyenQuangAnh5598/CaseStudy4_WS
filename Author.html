@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fairy Tales</title>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+    </script>
+    <script src="authoJs.js"></script>
+</head>
+<body>
+<div>
+    <h1>Create New Author</h1>
+    <table id="addAuthor">
+        <tr>
+            <td>Name :</td>
+            <td><input type="text" id="authorName" placeholder="dien ten de"></td>
+        </tr>
+
+        <tr>
+            <td>
+                <button TYPE="submit" onclick="CreateAuthor()">Tao tac gia moi</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<h2>Edit AUTHOR</h2>
+<form id="editForm">
+    <table>
+        <input type="text" id="idEdit" hidden/>
+        <tr>
+            <td>Fist Name :</td>
+            <td><input type="text" id="authorNameEdit" placeholder=" first name change"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="update" onclick="updateAuthor()"></td>
+        </tr>
+    </table>
+    <h1>danh sach tac gia</h1>
+    <table id="authorList" border="1px">
+
+    </table>
+</form>
+</body>
+</html>
