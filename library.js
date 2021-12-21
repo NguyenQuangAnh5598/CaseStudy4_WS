@@ -1,9 +1,13 @@
+let customer=JSON.parse(localStorage.getItem("customer"))
 getAllBook()
 getCategory()
 getAuthor()
 
 function getAllBook(){
     $.ajax({
+        headers: {
+            'Authorization': 'Bearer '+ customer.accessToken
+        },
         type:"GET",
         url:"http://localhost:8080/books",
         success:function (data){
@@ -66,6 +70,9 @@ function page(a){
     }
 
     $.ajax({
+        headers: {
+            'Authorization': 'Bearer '+ customer.accessToken
+        },
         type:"GET",
         url:url,
         success:function (data){
@@ -82,6 +89,9 @@ function page(a){
 }
 function getCategory(){
     $.ajax({
+        headers: {
+            'Authorization': 'Bearer '+ customer.accessToken
+        },
         type:"GET",
         url:"http://localhost:8080/categories/showAll",
         success:function (data){
@@ -95,6 +105,9 @@ function getCategory(){
 }
 function getAuthor() {
     $.ajax({
+        headers: {
+            'Authorization': 'Bearer '+ customer.accessToken
+        },
         type:"GET",
         url:"http://localhost:8080/author/list",
         success:function (data){
@@ -113,6 +126,9 @@ function findByCategory(){
         return getAllBook();
     }
     $.ajax({
+        headers: {
+            'Authorization': 'Bearer '+ customer.accessToken
+        },
         type:"GET",
         url:'http://localhost:8080/books/list/category/' + id,
         success:function (data){
@@ -133,6 +149,9 @@ function findByAuthor(){
         return getAllBook();
     }
     $.ajax({
+        headers: {
+            'Authorization': 'Bearer '+ customer.accessToken
+        },
         type:"GET",
         url:'http://localhost:8080/books/list/author/' + id,
         success:function (data){
@@ -156,6 +175,9 @@ function borrow(a){
     let userID = JSON.parse(localStorage.getItem("customer")).id;
 
     $.ajax({
+        headers: {
+            'Authorization': 'Bearer '+ customer.accessToken
+        },
         type:"GET",
         url:"http://localhost:8080/cart/findCart/" + userID,
         success:function (data) {
@@ -165,6 +187,7 @@ function borrow(a){
                 type:"POST",
                 url:"http://localhost:8080/cartDetail/create",
                 headers:{
+                    'Authorization': 'Bearer '+ customer.accessToken,
                     "Accept": "application/json",
                     "Content-type": "application/json"
                 },

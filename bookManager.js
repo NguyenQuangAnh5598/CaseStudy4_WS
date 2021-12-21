@@ -1,10 +1,14 @@
+let customer=JSON.parse(localStorage.getItem("customer"))
+
 getBookForFun()
 getAuthor("author")
 getStatus("status")
 getCategoryAdd()
-
 function getBookForFun() {
     $.ajax({
+        headers:{
+            'Authorization': 'Bearer '+ customer.accessToken
+        },
         url: "http://localhost:8080/books",
         type: "GET",
         success: function (data) {
@@ -50,6 +54,9 @@ function getBook(book) {
 
 function getAuthor(id,authorId) {
     $.ajax({
+        headers:{
+            'Authorization': 'Bearer '+ customer.accessToken
+        },
         url: "http://localhost:8080/author/list",
         type: "GET",
         success: function (data) {
@@ -68,6 +75,9 @@ function getAuthor(id,authorId) {
 
 function getStatus(id,statusId) {
     $.ajax({
+        headers:{
+            'Authorization': 'Bearer '+ customer.accessToken
+        },
         url: "http://localhost:8080/bookStatus/list",
         type: "GET",
         success: function (data) {
@@ -87,6 +97,9 @@ function getStatus(id,statusId) {
 
 function getCategoryEdit(categoryList) {
     $.ajax({
+        headers:{
+            'Authorization': 'Bearer '+ customer.accessToken
+        },
         url: "http://localhost:8080/categories/showAll",
         type: "GET",
         success: function (data) {
@@ -111,6 +124,9 @@ function getCategoryEdit(categoryList) {
 }
 function getCategoryAdd() {
     $.ajax({
+        headers:{
+            'Authorization': 'Bearer '+ customer.accessToken
+        },
         url: "http://localhost:8080/categories/showAll",
         type: "GET",
         success: function (data) {
@@ -154,7 +170,10 @@ function createBook() {
         type:"POST",
         url: "http://localhost:8080/books/create",
         data: formData,
-        headers:{'Content-Type':undefined},
+        // headers:{'Content-Type':undefined},
+        headers:{
+            'Authorization': 'Bearer '+ customer.accessToken
+        },
         contentType: false,
         processData: false,
         success:getBookForFun
@@ -199,7 +218,10 @@ function editBook(){
             type:"POST",
             url: "http://localhost:8080/books/create",
             data: formData,
-            headers:{'Content-Type':undefined},
+            // headers:{'Content-Type':undefined},
+            headers:{
+                'Authorization': 'Bearer '+ customer.accessToken
+            },
             contentType: false,
             processData: false,
             success:getBookForFun
@@ -213,7 +235,8 @@ function editBook(){
             data:JSON.stringify(book),
             headers:{
                 "Accept": "application/json",
-                "Content-type": "application/json"
+                "Content-type": "application/json",
+                'Authorization': 'Bearer '+ customer.accessToken
             },
             success:getBookForFun
         })
@@ -228,11 +251,10 @@ function editForm(a){
         type:"GET",
         url:"http://localhost:8080/books/find/"+ id,
         headers: {
-
+            'Authorization': 'Bearer '+ customer.accessToken
         },
         success: function (data){
             let img = '/image/' + data.image;
-            alert(data.categoryList.length);
             getAuthor('editauthor',data.author.id);
             getStatus('editstatus',data.bookStatus.id);
             getCategoryEdit(data.categoryList);
@@ -259,6 +281,9 @@ function getFormDelete(a){
 function deleteCustomer(a){
     let id = a.getAttribute("href");
     $.ajax({
+        headers: {
+            'Authorization': 'Bearer '+ customer.accessToken
+        },
         type:"DELETE",
         url:'http://localhost:8080/books/delete/' + id,
         success:getBookForFun
@@ -293,6 +318,9 @@ function getPage(page){
 function page(a){
     let page = a.getAttribute("id");
     $.ajax({
+        headers: {
+            'Authorization': 'Bearer '+ customer.accessToken
+        },
         url: "http://localhost:8080/books?page=" + page,
         type: "GET",
         success: function (data) {

@@ -1,5 +1,6 @@
 let bookID = localStorage.getItem("bookID");
-let userID = JSON.parse(localStorage.getItem("customer")).id;
+let customer = JSON.parse(localStorage.getItem("customer"));
+let userID = customer.id;
 
 successHandlerBookDetail()
 
@@ -76,7 +77,8 @@ function createNewComment() {
     $.ajax({
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ customer.accessToken
         },
         type: "POST",
         url: "http://localhost:8080/comments/create",

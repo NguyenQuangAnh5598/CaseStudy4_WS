@@ -13,6 +13,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     </head>
     <script>
+        let customer = JSON.parse(localStorage.getItem("customer"))
 
         newbook()
 
@@ -45,6 +46,9 @@
         function bestBook() {
             $.ajax({
                 type: "GET",
+                headers: {
+                    'Authorization': 'Bearer '+ customer.accessToken
+                },
                 url: "http://localhost:8080/books/bestBook",
                 success: function (book) {
                     let content = `<div class="small-container">
@@ -84,10 +88,9 @@
             <li>
                 <span id="username"></span>
                 <script>
-                    let customer = JSON.parse(localStorage.getItem("customer"))
                     if (customer != null) {
                         let name = customer.username
-                        let content = `<a href="" style="text-decoration: none"><h4 style="color: #92169f">Hello ${name}</h4></a> `
+                        let content = `<a href="UserInformation.html" style="text-decoration: none"><h4 style="color: #92169f">Hello ${name}</h4></a> `
                         document.getElementById("username").innerHTML = content
                     }
                 </script>
@@ -119,7 +122,7 @@
 
         <div class="row">
             <div class="col-2">
-                <h1>Give Your Workout<br> A New Style!</h1>
+                <h1 style="color: white">Library of Congress</h1>
                 <p style="color: #f5f4ec">The more that you read, the more things you will know. The more that you
                     learn, the more places
                     you’ll go.. </p>
@@ -164,7 +167,7 @@
                 <p>Imagine when you 42 years old, you wake up on bed and start another day with same things to do like
                     everyday. You live like 20 years like that. If you don’t like it, how u still can do? So love what
                     you do , do what you love will save your life a lote</p>
-                <img src="avatar/beng.jpg" height="100" width="100"/>
+                <img src="avatar/beng.jpg" height="70" width="100"/>
                 <h3>Lawer Law <br>(Công Bằng)</h3>
 
             </div>
@@ -174,7 +177,7 @@
                 <p>ATalking about life, it’s always long story. But in that long story, did u enjoyed every moment? I
                     not enjoyed every moment at all, but some moments I really enjoy. That’s moments are moment with my
                     super cute girls, always make me happy with their pussies… Oh my holy gosh, I love my life !</p>
-                <img src="images/user-3.png">
+                <img src="avatar/qa.jpg" height="70" width="100"/>
                 <h3>Lighting Brother<br> (Quang Anh)</h3>
             </div>
             <div class="col-3">
@@ -194,7 +197,7 @@
                 <p>History was wroten by winner guys. Many years is evidence of what I’m talking about. Peaceful is
                     reward for victories of battle war’s master. In another life, I conquered many civilization and now
                     I’m reborn. I remember everything. </p>
-                <img src="images/user-3.png">
+               <img src="avatar/truong.jpg" height="70" width="100"/>
                 <h3>Forever Peaceful <br>(Thanh Trường)</h3>
             </div>
             <div class="col-3">
@@ -202,7 +205,7 @@
                 <h3>You alive when you alive </h3>
                 <p>You only life once. Dead or alive, just kind of status. Many peoples life but not life. So let’s life
                     how to it worthy.</p>
-                <img src="images/user-3.png">
+            <img src="avatar/tuan.jpg" height="70" width="100"/>
                 <h3>SavageMod Pretty Boy<br> (Bá Tuấn)</h3>
             </div>
 
