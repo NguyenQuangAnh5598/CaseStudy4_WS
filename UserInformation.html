@@ -20,6 +20,7 @@
         function updateImage() {
             let img = $("#file")[0].files[0];
 
+
             let formData = new FormData;
             formData.append("file", img);
             $.ajax({
@@ -193,10 +194,15 @@
                 </div>
             </div>
             <div class="col-md-2">
+
+
+
                 <button type="button" class="profile-edit-btn" data-toggle="modal" data-target="#exampleModal">
                     Edit Information
                 </button>
-<!--                <input type="submit" class="" name="btnAddMore" value="Edit Profile"/>-->
+
+
+
             </div>
         </div>
         <div class="row">
