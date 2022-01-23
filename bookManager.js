@@ -294,7 +294,7 @@ function deleteCustomer(a){
 function getPage(page){
     let content = "";
     let count = 0;
-    count = parseInt((page.number + 1)/5) * 5;
+    count = parseInt((page.number )/5) * 5;
     if (page.number > 0){
         content+= `<li class="page-item "><a class="page-link" onclick="page(this)" id="${page.number -1}">Previous</a></li>`
     }

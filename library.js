@@ -24,7 +24,7 @@ function getAllBook(){
 function getBook(book){
     let img = "/image/" + book.image;
     let content = `<div class="col-4">`+
-        `<p onclick="getDetail(this)" id="${book.id}"><img src="${img}"></p>`+
+        `<p onclick="getDetail(this)" id="${book.id}"><img src="${img}" height="300px" width="200"></p>`+
         `<button onclick="borrow(this)" id="${book.id}">muon</button>`+
         `<h4>${book.name}</h4>`+
         `</div>`
@@ -33,7 +33,7 @@ function getBook(book){
 function getPage(page){
     let content = "";
     let count = 0;
-    count = parseInt((page.number + 1)/5) * 5;
+    count = parseInt((page.number )/5) * 5;
     if (page.number > 0){
         content+= `<span id="${page.number -1}" onclick="page(this)">&#8592;</span>`
     }

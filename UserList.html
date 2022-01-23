@@ -11,7 +11,7 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript">
-
+        let customer=JSON.parse(localStorage.getItem("customer"))
         function getCart(cart) {
 
 
@@ -69,6 +69,7 @@
             let id = a.getAttribute("id")
             $.ajax({
                 headers: {
+                    'Authorization': 'Bearer ' + customer.accessToken,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
@@ -86,6 +87,9 @@
         }
         function showBorrowUser() {
             $.ajax({
+                headers: {
+                    'Authorization': 'Bearer ' + customer.accessToken
+                },
                 type: "GET",
                 url: "http://localhost:8080/cart/list",
                 success: function (data) {
@@ -106,6 +110,7 @@
     <div class="row bootstrap snippets bootdeys">
         <div class="col-md-9 col-sm-7">
             <h2>Members</h2>
+            <a style="text-decoration: none" href="index.html">Home</a>
         </div>
         <div class="col-md-3 col-sm-5">
             <form method="get" role="form" class="search-form-full">
