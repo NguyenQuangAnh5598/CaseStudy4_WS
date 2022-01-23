@@ -15,9 +15,13 @@
     <title>Manager List</title>
     <link rel="stylesheet" href="managerList.css">
     <script>
+        let customer=JSON.parse(localStorage.getItem("customer"))
         showList();
         function showList(){
             $.ajax({
+                headers: {
+                    'Authorization': 'Bearer '+ customer.accessToken
+                },
                 type:"GET",
                 url:"http://localhost:8080/user/findManager",
                 success:function (data){
@@ -62,6 +66,9 @@
         function showEdit(a){
             let id=a.getAttribute("id");
             $.ajax({
+                headers: {
+                    'Authorization': 'Bearer '+ customer.accessToken
+                },
                 type:"GET",
                 url:"http://localhost:8080/user/findOne/"+id,
                 success:function (manager){
@@ -75,6 +82,9 @@
         function deleteManager(a){
             let id= a.getAttribute("id");
             $.ajax({
+                headers: {
+                    'Authorization': 'Bearer '+ customer.accessToken
+                },
                 type: "DELETE",
                 url: "http://localhost:8080/user/delete/"+id,
                 success:showList
@@ -92,6 +102,7 @@
             }
             $.ajax({
                 headers: {
+                    'Authorization': 'Bearer '+ customer.accessToken,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
@@ -149,6 +160,7 @@
                 <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
                     <table class="table manage-candidates-top mb-0">
                         <thead>
+                        <tr><a href="index.html">Home</a></tr>
                         <tr>
                             <th>Full Name</th>
                             <th class="text-center">Account</th>

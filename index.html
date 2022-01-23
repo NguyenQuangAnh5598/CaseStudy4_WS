@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +13,7 @@
     </head>
     <script>
         let customer = JSON.parse(localStorage.getItem("customer"))
+
 
         newbook()
 
@@ -47,7 +47,7 @@
             $.ajax({
                 type: "GET",
                 headers: {
-                    'Authorization': 'Bearer '+ customer.accessToken
+                    'Authorization': 'Bearer ' + customer.accessToken
                 },
                 url: "http://localhost:8080/books/bestBook",
                 success: function (book) {
@@ -80,11 +80,49 @@
 <div class="navbar">
     <div class="logo">
         <a href="index.html"><img src="images/logo.png" width="125px"></a>
+        <span id="bookManager">
+        </span>
+        <script>
+            if (customer != null) {
+                let role = customer.roles
+                for (let i = 0; i <role.length ; i++) {
+                        if(role[i].authority=="ROLE_ADMIN"){
+                            let content=`<a href="bookManager.html">Book Manager</a>`
+                            document.getElementById("bookManager").innerHTML=content
+                        }
+                }
+            }
+        </script>
+        <span id="managerList"></span>
+        <script>
+            if (customer != null) {
+                let role = customer.roles
+                for (let i = 0; i <role.length ; i++) {
+                    if(role[i].authority=="ROLE_ADMIN"){
+                        let managerList=`<a href="managerList.html">List Manager</a>`
+                        document.getElementById("managerList").innerHTML=managerList
+                    }
+                }
+            }
+        </script>
+        <span id="userList"></span>
+        <script>
+            if (customer != null) {
+                let role = customer.roles
+                for (let i = 0; i <role.length ; i++) {
+                    if(role[i].authority=="ROLE_ADMIN"||role[i].authority=="ROLE_MANAGER"){
+                        let userList=`<a href="UserList.html">List User</a>`
+                        document.getElementById("userList").innerHTML=userList
+                    }
+                }
+            }
+        </script>
+
     </div>
     <nav>
         <ul id="MenuItems">
             <li><a href="index.html">Home</a></li>
-            <li><a href="library.html">Products</a></li>
+            <li><a href="library.html">Library</a></li>
             <li>
                 <span id="username"></span>
                 <script>
@@ -182,6 +220,15 @@
             </div>
             <div class="col-3">
                 <i class="fa fa-qoute-lef"></i>
+                <h3>Peaceful, can be gain without War</h3>
+                <p>History was wroten by winner guys. Many years is evidence of what I’m talking about. Peaceful is
+                    reward for victories of battle war’s master. In another life, I conquered many civilization and now
+                    I’m reborn. I remember everything. </p>
+                <img src="avatar/truong.jpg" height="70" width="100"/>
+                <h3>Forever Peaceful <br>(Thanh Trường)</h3>
+            </div>
+            <div class="col-3">
+                <i class="fa fa-qoute-lef"></i>
                 <h3>We meet when flower blow</h3>
                 <p>Why people? Why not another any animals else? Why we got chosen and chosen by who? I always keep
                     asking my self and I think everything happen for a reason, we just know or not. So I know I’ll meet
@@ -191,21 +238,13 @@
                 <h3>Kawa Decided<br> (Định Kawa)</h3>
             </div>
 
-            <div class="col-3">
-                <i class="fa fa-qoute-lef"></i>
-                <h3>Peaceful, can be gain without War</h3>
-                <p>History was wroten by winner guys. Many years is evidence of what I’m talking about. Peaceful is
-                    reward for victories of battle war’s master. In another life, I conquered many civilization and now
-                    I’m reborn. I remember everything. </p>
-               <img src="avatar/truong.jpg" height="70" width="100"/>
-                <h3>Forever Peaceful <br>(Thanh Trường)</h3>
-            </div>
+
             <div class="col-3">
                 <i class="fa fa-qoute-lef"></i>
                 <h3>You alive when you alive </h3>
                 <p>You only life once. Dead or alive, just kind of status. Many peoples life but not life. So let’s life
                     how to it worthy.</p>
-            <img src="avatar/tuan.jpg" height="70" width="100"/>
+                <img src="avatar/tuan.jpg" height="70" width="100"/>
                 <h3>SavageMod Pretty Boy<br> (Bá Tuấn)</h3>
             </div>
 
